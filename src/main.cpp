@@ -5,16 +5,15 @@
  */
 
 #include <QApplication>
-#include <QPushButton>
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QPushButton hello("Hello World");
-    hello.resize(100, 30);
+    MainWindow mainwindow;
+    mainwindow.show();
 
-    hello.show();
     return app.exec();
 }
 
