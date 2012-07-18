@@ -7,3 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(this);
 }
 
+void MainWindow::on_actionQuit_triggered()
+{
+    qApp->quit();
+}
+

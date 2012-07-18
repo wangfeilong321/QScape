@@ -9,6 +9,9 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
     public:
         MainWindow(QWidget *parent = 0);
+
+    private slots:
+        void on_actionQuit_triggered();
 };
 
 #endif
