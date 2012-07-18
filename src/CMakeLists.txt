@@ -5,6 +5,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 SET(CMAKE_COLOR_MAKEFILE ON)
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/../cmake ${CMAKE_MODULE_PATH})
 
+FIND_PACKAGE(OpenSceneGraph REQUIRED)
+
 # All the Qt stuff
 # http://qt-project.org/quarterly/view/using_cmake_to_build_qt_projects
 FIND_PACKAGE(Qt4 REQUIRED)
@@ -14,20 +16,32 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 # QOSG Source Files
 SET(QOSG_SOURCES
     main.cpp
-    mainwindow.cpp)
+    mainwindow.cpp
+    viewerwidget.cpp)
 SET(QOSG_HEADERS
-    mainwindow.h)
+    mainwindow.h
+    viewerwidget.h)
 SET(QOSG_FORMS
     ui/mainwindow.ui)
 
 # QOSG Build Instructions
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+INCLUDE_DIRECTORIES(
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${OPENSCENEGRAPH_INCLUDE_DIRS})
 QT4_WRAP_CPP(QOSG_HEADERS_MOC ${QOSG_HEADERS})
 QT4_WRAP_UI(QOSG_FORMS_HEADERS ${QOSG_FORMS})
 ADD_EXECUTABLE(qosg ${QOSG_SOURCES}
     ${QOSG_HEADERS_MOC}
     ${QOSG_FORMS_HEADERS})
-TARGET_LINK_LIBRARIES(qosg ${QT_LIBRARIES})
+TARGET_LINK_LIBRARIES(qosg
+    ${QT_LIBRARIES}
+    ${OPENSCENEGRAPH_LIBRARIES}
+    osgAnimation
+    osgGA
+    osgDB
+    osgWidget
+    osgViewer
+    osgQt)
 
 # QOSG Documentation Build Instructions
 find_package(Sphinx REQUIRED)
