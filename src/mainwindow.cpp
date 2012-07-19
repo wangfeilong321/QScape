@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <osgDB/ReadFile>
 #include "mainwindow.h"
 
 MainWindow::MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel,
@@ -13,5 +14,13 @@ MainWindow::MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel,
 void MainWindow::on_actionQuit_triggered()
 {
     qApp->quit();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Select Scene File");
+    if(fileName != NULL) {
+        _viewerWidget->setSceneData(osgDB::readNodeFile(fileName.toAscii().data()));
+    }
 }
 

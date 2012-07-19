@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
     private slots:
         void on_actionQuit_triggered();
+        void on_actionOpen_triggered();
 
     private:
         ViewerWidget *_viewerWidget;
