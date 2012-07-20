@@ -39,6 +39,7 @@ TARGET_LINK_LIBRARIES(qosg
     osgAnimation
     osgGA
     osgDB
+    osgUtil
     osgWidget
     osgViewer
     osgQt)

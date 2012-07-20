@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <osgDB/ReadFile>
+#include <osgUtil/Optimizer>
 #include "mainwindow.h"
 
 MainWindow::MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel,
@@ -20,7 +21,12 @@ void MainWindow::on_actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Select Scene File");
     if(fileName != NULL) {
-        _viewerWidget->setSceneData(osgDB::readNodeFile(fileName.toAscii().data()));
+        osg::ref_ptr<osg::Node> node = osgDB::readNodeFile(fileName.toAscii().data());
+        if(node != NULL) {
+            osgUtil::Optimizer optimizer;
+            optimizer.optimize(node);
+        _viewerWidget->setSceneData(node);
+        }
     }
 }
 
