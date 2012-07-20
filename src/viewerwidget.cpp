@@ -18,7 +18,8 @@ ViewerWidget::ViewerWidget(osgViewer::ViewerBase::ThreadingModel threadingModel,
     setLayout(grid);
 
     connect(&_timer, SIGNAL(timeout()), this, SLOT(update()));
-    _timer.start(100);
+    _timerInterval = 10;
+    start();
 }
 
 QWidget* ViewerWidget::createWidget(osg::Camera* camera, osg::Node* scene)
@@ -58,5 +59,15 @@ osg::Camera* ViewerWidget::createCamera(int x, int y, int w, int h, QString name
         30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0f, 10000.0f );
 
     return camera.release();
+}
+
+void ViewerWidget::stop()
+{
+    _timer.stop();
+}
+
+void ViewerWidget::start()
+{
+    _timer.start(_timerInterval);
 }
 

@@ -19,6 +19,7 @@ void MainWindow::on_actionQuit_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
+    _viewerWidget->stop();
     QString fileName = QFileDialog::getOpenFileName(this, "Select Scene File");
     if(fileName != NULL) {
         osg::ref_ptr<osg::Node> node = osgDB::readNodeFile(fileName.toAscii().data());
@@ -28,5 +29,6 @@ void MainWindow::on_actionOpen_triggered()
         _viewerWidget->setSceneData(node);
         }
     }
+    _viewerWidget->start();
 }
 
