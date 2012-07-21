@@ -4,6 +4,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QWidget>
 #include <osgViewer/Viewer>
+#include <osg/PolygonMode>
 
 class ViewerWidget : public QWidget, public osgViewer::Viewer
 {
@@ -20,6 +21,7 @@ class ViewerWidget : public QWidget, public osgViewer::Viewer
     public slots:
         void stop();
         void start();
+        void togglePolygonMode(bool enable);
 
     protected:
         osg::Camera* createCamera(int x, int y, int w, int h, QString = "");
@@ -27,6 +29,8 @@ class ViewerWidget : public QWidget, public osgViewer::Viewer
 
         QTimer _timer;
         int _timerInterval;
+
+        osg::ref_ptr<osg::PolygonMode> _polygonMode;
 };
 
 #endif

@@ -84,3 +84,17 @@ int ViewerWidget::setMap(osg::Node *map)
     return 0;
 }
 
+void ViewerWidget::togglePolygonMode(bool enable)
+{
+    if(_polygonMode == NULL) {
+        _polygonMode = new osg::PolygonMode;
+        _polygonMode->setMode(osg::PolygonMode::FRONT_AND_BACK, osg::PolygonMode::LINE);
+    }
+
+    if(enable) {
+        getSceneData()->getOrCreateStateSet()->setAttribute(_polygonMode.get());
+    } else {
+        getSceneData()->getOrCreateStateSet()->removeAttribute(_polygonMode.get());
+    }
+}
+

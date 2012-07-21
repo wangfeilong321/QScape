@@ -9,6 +9,9 @@ MainWindow::MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel,
     setupUi(this);
     _viewerWidget = new ViewerWidget(threadingModel, this);
     setCentralWidget(_viewerWidget);
+
+    connect(actionTogglePolygonMode, SIGNAL(toggled(bool)),
+            _viewerWidget, SLOT(togglePolygonMode(bool)));
 }
 
 void MainWindow::on_actionQuit_triggered()
