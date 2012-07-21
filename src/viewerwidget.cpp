@@ -4,6 +4,7 @@
 #include <osgGA/TrackballManipulator>
 #include <osgViewer/ViewerEventHandlers>
 #include <osgQt/GraphicsWindowQt>
+#include <osgUtil/Optimizer>
 
 #include "viewerwidget.h"
 
@@ -71,5 +72,15 @@ void ViewerWidget::stop()
 void ViewerWidget::start()
 {
     _timer.start(_timerInterval);
+}
+
+int ViewerWidget::setMap(osg::Node *map)
+{
+    osgUtil::Optimizer optimizer;
+    optimizer.optimize(map);
+
+    setSceneData(map);
+
+    return 0;
 }
 

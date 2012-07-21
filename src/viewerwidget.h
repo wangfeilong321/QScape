@@ -15,6 +15,8 @@ class ViewerWidget : public QWidget, public osgViewer::Viewer
 
         virtual void paintEvent(QPaintEvent* event) { frame(); }
 
+        int setMap(osg::Node* map);
+
     public slots:
         void stop();
         void start();
@@ -22,8 +24,8 @@ class ViewerWidget : public QWidget, public osgViewer::Viewer
     protected:
         osg::Camera* createCamera(int x, int y, int w, int h, QString = "");
         QWidget* createWidget(osg::Camera* camera, osg::Node* scene);
-        QTimer _timer;
 
+        QTimer _timer;
         int _timerInterval;
 };
 
