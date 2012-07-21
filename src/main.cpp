@@ -1,5 +1,5 @@
 /**
- * QOSG
+ * QScape
  *
  * (c) Christian Wygoda
  */

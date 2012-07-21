@@ -1,4 +1,4 @@
-PROJECT(QOSG)
+PROJECT(QSCAPE)
 
 # CMake Setup
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -13,27 +13,27 @@ FIND_PACKAGE(Qt4 REQUIRED)
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
-# QOSG Source Files
-SET(QOSG_SOURCES
+# QScape Source Files
+SET(QSCAPE_SOURCES
     main.cpp
     mainwindow.cpp
     viewerwidget.cpp)
-SET(QOSG_HEADERS
+SET(QSCAPE_HEADERS
     mainwindow.h
     viewerwidget.h)
-SET(QOSG_FORMS
+SET(QSCAPE_FORMS
     ui/mainwindow.ui)
 
-# QOSG Build Instructions
+# QScape Build Instructions
 INCLUDE_DIRECTORIES(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${OPENSCENEGRAPH_INCLUDE_DIRS})
-QT4_WRAP_CPP(QOSG_HEADERS_MOC ${QOSG_HEADERS})
-QT4_WRAP_UI(QOSG_FORMS_HEADERS ${QOSG_FORMS})
-ADD_EXECUTABLE(qosg ${QOSG_SOURCES}
-    ${QOSG_HEADERS_MOC}
-    ${QOSG_FORMS_HEADERS})
-TARGET_LINK_LIBRARIES(qosg
+QT4_WRAP_CPP(QSCAPE_HEADERS_MOC ${QSCAPE_HEADERS})
+QT4_WRAP_UI(QSCAPE_FORMS_HEADERS ${QSCAPE_FORMS})
+ADD_EXECUTABLE(qscape ${QSCAPE_SOURCES}
+    ${QSCAPE_HEADERS_MOC}
+    ${QSCAPE_FORMS_HEADERS})
+TARGET_LINK_LIBRARIES(qscape
     ${QT_LIBRARIES}
     ${OPENSCENEGRAPH_LIBRARIES}
     osgAnimation
@@ -44,7 +44,7 @@ TARGET_LINK_LIBRARIES(qosg
     osgViewer
     osgQt)
 
-# QOSG Documentation Build Instructions
+# QScape Documentation Build Instructions
 find_package(Sphinx REQUIRED)
 # configured documentation tools and intermediate build results
 set(BINARY_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/_build")
