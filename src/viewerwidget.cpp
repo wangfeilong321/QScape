@@ -1,5 +1,6 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QWidget>
+#include <QColor>
 
 #include <osgGA/TrackballManipulator>
 #include <osgViewer/ViewerEventHandlers>
@@ -56,7 +57,8 @@ osg::Camera* ViewerWidget::createCamera(int x, int y, int w, int h, QString name
     osg::ref_ptr<osg::Camera> camera = new osg::Camera;
 
     camera->setGraphicsContext( new osgQt::GraphicsWindowQt(traits.get()) );
-    camera->setClearColor( osg::Vec4(0.82, 0.82, 0.82, 0.0) );
+    QColor color = palette().color(backgroundRole());
+    camera->setClearColor( osg::Vec4(color.red() / 255.0, color.green() / 255.0, color.blue() / 255.0, 1.0) );
     camera->setViewport( new osg::Viewport(0, 0, traits->width, traits->height) );
     camera->setProjectionMatrixAsPerspective(
         30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0f, 10000.0f );
