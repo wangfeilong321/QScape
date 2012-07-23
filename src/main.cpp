@@ -21,8 +21,10 @@ int main(int argc, char *argv[])
     while (arguments.read("--DrawThreadPerContext")) threadingModel = osgViewer::ViewerBase::DrawThreadPerContext;
     while (arguments.read("--CullThreadPerCameraDrawThreadPerContext")) threadingModel = osgViewer::ViewerBase::CullThreadPerCameraDrawThreadPerContext;
 
+    std::string earthfilename;
+    arguments.read("--file", earthfilename);
 
-    MainWindow mainwindow(threadingModel);
+    MainWindow mainwindow(threadingModel, QString::fromStdString(earthfilename));
     mainwindow.show();
 
     return app.exec();

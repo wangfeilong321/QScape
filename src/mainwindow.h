@@ -12,8 +12,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
     Q_OBJECT
 
     public:
-        MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel,
-            QWidget *parent = 0);
+        MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel, QString filename = NULL, QWidget *parent = 0);
 
     private slots:
         void on_actionQuit_triggered();
@@ -21,6 +20,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
     private:
         ViewerWidget *_viewerWidget;
+        void _loadFile(QString filename);
 };
 
 #endif
