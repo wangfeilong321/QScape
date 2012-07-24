@@ -1,5 +1,8 @@
 #include <QtGui>
 #include <osgDB/ReadFile>
+
+#include <osgEarth/MapNode>
+
 #include "mainwindow.h"
 
 MainWindow::MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel, QString filename, QWidget *parent)
@@ -11,6 +14,8 @@ MainWindow::MainWindow(osgViewer::ViewerBase::ThreadingModel threadingModel, QSt
 
     connect(actionTogglePolygonMode, SIGNAL(toggled(bool)),
             _viewerWidget, SLOT(togglePolygonMode(bool)));
+
+    createDockWindows();
 
     _loadFile(filename);
 }
@@ -34,7 +39,23 @@ void MainWindow::_loadFile(QString filename)
 {
     osg::ref_ptr<osg::Node> node = osgDB::readNodeFile(filename.toAscii().data());
     if(node != NULL) {
-         _viewerWidget->setMap(node.get());
+        osgEarth::MapNode* mapNode = osgEarth::MapNode::findMapNode(node);
+         _viewerWidget->setMap(mapNode->getMap());
     }
+}
+
+void MainWindow::createDockWindows()
+{
+    QDockWidget *dock = new QDockWidget("Viewer Settings", this);
+    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+
+    _cameraWidget = new CameraWidget(dock);
+    connect(_viewerWidget, SIGNAL(cameraChanged(osg::Matrixd)),
+            _cameraWidget, SLOT(onCameraChanged(osg::Matrixd)));
+    connect(_cameraWidget, SIGNAL(dataChanged(double, double, double)),
+            _viewerWidget, SLOT(setCameraPosition(double, double, double)));
+
+    dock->setWidget(_cameraWidget);
+    addDockWidget(Qt::LeftDockWidgetArea, dock);
 }
 

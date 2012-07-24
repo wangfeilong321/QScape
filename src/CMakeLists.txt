@@ -17,12 +17,15 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 SET(QSCAPE_SOURCES
     main.cpp
     mainwindow.cpp
-    viewerwidget.cpp)
+    viewerwidget.cpp
+    camerawidget.cpp)
 SET(QSCAPE_HEADERS
     mainwindow.h
-    viewerwidget.h)
+    viewerwidget.h
+    camerawidget.h)
 SET(QSCAPE_FORMS
-    ui/mainwindow.ui)
+    ui/mainwindow.ui
+    ui/camerawidget.ui)
 
 # QScape Build Instructions
 INCLUDE_DIRECTORIES(
@@ -30,6 +33,7 @@ INCLUDE_DIRECTORIES(
     ${OPENSCENEGRAPH_INCLUDE_DIRS})
 QT4_WRAP_CPP(QSCAPE_HEADERS_MOC ${QSCAPE_HEADERS})
 QT4_WRAP_UI(QSCAPE_FORMS_HEADERS ${QSCAPE_FORMS})
+
 ADD_EXECUTABLE(qscape ${QSCAPE_SOURCES}
     ${QSCAPE_HEADERS_MOC}
     ${QSCAPE_FORMS_HEADERS})
@@ -42,7 +46,8 @@ TARGET_LINK_LIBRARIES(qscape
     osgUtil
     osgWidget
     osgViewer
-    osgQt)
+    osgQt
+    osgEarth)
 
 # QScape Documentation Build Instructions
 find_package(Sphinx REQUIRED)
