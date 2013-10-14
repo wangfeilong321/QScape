@@ -115,6 +115,37 @@ int ViewerWidget::setMap(osgEarth::Map *map)
     srs->transform(bounds.center().x(), bounds.center().y(), epsg4326, gx, gy);
     qDebug() << gx << " " << gy;
 
+    // Sun etc.
+
+    SGPath texturePath("../src/texture/");
+    texturePath.append("Textures");
+    texturePath.append("Sky")
+
+    osg::LightSource* sunLight = new osg::LightSource;
+    sunLight->getLight()->setDataVariance(osg::Object::DYNAMIC);
+    sunLight->getLight()->setLightNum(1);
+    //
+    sunLight->setReferenceFrame(osg::LightSource::RELATIVE_RF);
+    sunLight->setLocalStateSetModes(osg::StateAttribute::ON);
+
+    Ephemeris* ephemeris = new Ephemeris;
+    ephemeris->init();
+    ephemeris->bind();
+
+    _sky = new SGSky;
+    _sky->texture_path(texturePath.str());
+
+    _sky->build(80000.0, 80000.0,
+                463.3, 361.8,
+                ephemeris,
+                NULL);
+
+    osg::ref_ptr<osg::Node> skyGroup = new osg::Group;
+    skyGroup->getOrCreateStateSet()->setMode(GL_LIGHT0, osg::StateAttribute::OFF);
+    skyGroup->addChild(_sky->getPreRoot());
+    sunLight->addChild(skyGroup);
+
+    root->addChild(sunLight);
     osgUtil::Optimizer optimizer;
     optimizer.optimize(root.get());
 

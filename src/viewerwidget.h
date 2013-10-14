@@ -13,6 +13,8 @@
 
 #include <osgEarth/Map>
 
+#include <simgear/scene/sky/sky.hxx>
+
 class ViewerWidget : public QWidget, public osgViewer::Viewer
 {
     Q_OBJECT
@@ -45,6 +47,7 @@ class ViewerWidget : public QWidget, public osgViewer::Viewer
 
         osg::ref_ptr<osg::PolygonMode> _polygonMode;
         osg::ref_ptr<osgGA::StandardManipulator> _cameraManipulator;
+        SGSky* _sky;
 
 };
 
